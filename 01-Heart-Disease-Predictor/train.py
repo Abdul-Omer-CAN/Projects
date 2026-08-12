@@ -72,3 +72,28 @@ model = XGBClassifier( # creates an XGBoost classification model and stores it i
 model.fit(X_train, y_train) # train the model on the training data. Finds patterns between bp, age etc.
 print("Model training complete!")
 
+## Evaluate Model ##
+
+y_pred = model.predict(X_test) # Make predictions on test data
+
+accuracy = accuracy_score(y_test, y_pred) # compare predictions to actual answers
+print(f"Accuracy: {accuracy:.4f}") # print the accuracy
+
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))  # detailed breakdown of model performance for each class e.g precision, recall, f1-score, support.
+
+# Precision -> Of all patients, model predicted sick, how many actually were? High precision = few false alarms.
+# Recall -> of all actually sick patients, how many did the model catch?
+# F1-Score -> balance between precision and recall. Best metric to judge model performance.
+# Support -> How many actual patients in each class. 28 patients with no disease and 33 with disease.
+
+## Save Model ##
+
+joblib.dump(model, 'heart_disease_model.pkl') # Save the trained XGBoost model to disk. Contains the 100 trees and all the patterns it learned.
+joblib.dump(scaler, 'scaler.pkl') # Save Scaler too, needed for predictions. It contains the mean and std it learnt from training data. MUST use same scaler for new predictions otherwise scaling will be wrong.
+print("Model and scaler saved!") # .pkl is pickle file type. It is python's way of saving ANY Python object to disk.    
+
+print(df[df['target']==0].head())
+print(df['thal'].value_counts())
+print(df['cp'].value_counts())
+print(df[(df['target']==0) & (df['age'] < 45)].head())

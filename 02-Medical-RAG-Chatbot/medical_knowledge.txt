@@ -1,0 +1,14 @@
+Heart Disease:
+Heart disease refers to several types of heart conditions. The most common type is coronary artery disease, which can cause heart attack. Symptoms include chest pain, shortness of breath, and fatigue. Risk factors include high blood pressure, high cholesterol, smoking, diabetes, obesity, and family history. Treatment includes lifestyle changes, medications, and surgery.
+
+Diabetes:
+Diabetes is a chronic condition where the body cannot properly regulate blood sugar levels. Type 1 diabetes occurs when the immune system attacks insulin-producing cells. Type 2 diabetes occurs when the body becomes resistant to insulin. Symptoms include frequent urination, excessive thirst, blurred vision, and fatigue. Treatment includes diet, exercise, medication, and insulin therapy.
+
+High Blood Pressure:
+High blood pressure or hypertension occurs when blood pressure is consistently too high. It is often called the silent killer because it has no symptoms. Risk factors include obesity, lack of exercise, stress, smoking, and family history. Treatment includes lifestyle changes and medications such as ACE inhibitors and beta blockers.
+
+Cholesterol:
+High cholesterol increases risk of heart disease and stroke. LDL is bad cholesterol and HDL is good cholesterol. High cholesterol has no symptoms and is detected through blood tests. Treatment includes diet changes, exercise, and statins medication.
+
+Obesity:
+Obesity is defined as having a BMI over 30. It increases risk of heart disease, diabetes, high blood pressure, and certain cancers. Treatment includes diet, exercise, behavioral therapy, and in some cases surgery.

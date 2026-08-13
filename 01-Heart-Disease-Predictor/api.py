@@ -53,7 +53,7 @@ def predict(patient: PatientData): # fxn called predict. FastAPI auto receives a
 
 if __name__ == "__main__": # Will only run if you execute this file directly.
     import uvicorn # uvicorn is the actual server that runs FastAPI.
-    uvicorn.run(app, host="0.0.0.0", port=8500)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
 
 

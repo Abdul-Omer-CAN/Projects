@@ -47,6 +47,11 @@ function App() { // defines a JavaScript fxn called App == similiar to python's 
 
   return( // Here it returns Javascript XML(what gets displayed)
     <div className="App"> {/* this is a wrapper that holds the content below together think of it like a bag and the lines of codes below content. To keep them contained.*/}
+    <img
+      src="https://test-heartandstroke.shorthandstories.com/fighting-heart-failure/assets/fHsHRNZJxb/fallback-1280x720.jpeg"
+      alt="Heart health"
+      className="hero-image"
+      /> 
       <h1>Clinical Intelligence Platform</h1>  {/*JSX heading element*/}
       <p>Heart Disease Risk Predictor</p> {/*JSX Paragraph element.*/}
 
@@ -187,7 +192,7 @@ function App() { // defines a JavaScript fxn called App == similiar to python's 
       </form>
 
       {result && (
-        <div>
+        <div className='result-section'>
           <h2>Prediction Result:</h2>
           <p>{result.message}</p>
           <p>Risk: {result.risk}</p>

@@ -4,7 +4,11 @@ on:
   push:
     branches: [master]
     paths: 
-      - '01-Heart-Disease-Predictor/**'
+      - '01-Heart-Disease-Predictor/api.py'
+      - '01-Heart-Disease-Predictor/requirements.txt'
+      - '01-Heart-Disease-Predictor/Dockerfile'
+      - '01-Heart-Disease-Predictor/*.pkl'
+      
   workflow_dispatch:
 
 

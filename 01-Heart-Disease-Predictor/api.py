@@ -1,6 +1,7 @@
 ## IMPORTS ##
 
 from fastapi import FastAPI # FastAPI is the web framework
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel # Defines the structure of patient data we receive. Pydantic is a data validation lib. BaseModel lets us define the SHAPE of data we expect to receive.
 import joblib # load our saved model
 import numpy as np # for data manipulation
@@ -24,6 +25,14 @@ class PatientData(BaseModel): # Defines exactly what data the API expects and th
 ## Create FastAPI App ##
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 ## Load Model and Scaler ##
 model = joblib.load('heart_disease_model.pkl')

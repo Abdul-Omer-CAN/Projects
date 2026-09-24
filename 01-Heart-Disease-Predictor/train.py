@@ -8,6 +8,8 @@ from sklearn.metrics import accuracy_score # measure model accuracy
 from sklearn.metrics import classification_report # detailed precision/recall/f1-score
 from xgboost import XGBClassifier # our main ML model
 import  joblib # Save and Load trained model
+import mlflow
+import mlflow.xgboost
 
 
 ## Load Dataset ##
@@ -59,28 +61,44 @@ X_train = scaler.fit_transform(X_train) # learn the mean & std from training dat
 X_test = scaler.transform(X_test) # scale test data using same mean/std from training.
 # mean is always zero and in a normal distribution values fall within 3 standard deviations from mean.
 print("Scaling complete!")
+mlflow.set_experiment("heart-disease-predictor")
 
 ## Train XGBoost Model(prebuilt ML algo) ##
 
-model = XGBClassifier( # creates an XGBoost classification model and stores it in model
-    n_estimators=100, #number of trees to build. each tree learns from the one before it. More trees=better accuracy but also will take more time.
-    max_depth=4,  # how deep each tree grows. each tree can go 4 levels deep. It prevents overfitting. 4 level deep means itll ask 4 questions. 20 will be too deep and 1 will be too shallow.
-    learning_rate=0.1, # how fast the model learns or how much each tree corrects the previous trees mistakes. 0.1 means take small careful steps. 1 is too high. 0.1 is sweet spot.
+with mlflow.start_run():
+
+    n_trees= 150
+    tree_depth = 3
+    lr = 0.14
+
+    mlflow.log_param("n_estimators", n_trees) # log_param is for inputs/settings    
+    mlflow.log_param("max_depth", tree_depth)
+    mlflow.log_param("learning_rate", lr)
+
+
+    model = XGBClassifier( # creates an XGBoost classification model and stores it in model
+    n_estimators=n_trees, #number of trees to build. each tree learns from the one before it. More trees=better accuracy but also will take more time.
+    max_depth=tree_depth,  # how deep each tree grows. each tree can go 4 levels deep. It prevents overfitting. 4 level deep means itll ask 4 questions. 20 will be too deep and 1 will be too shallow.
+    learning_rate=lr, # how fast the model learns or how much each tree corrects the previous trees mistakes. 0.1 means take small careful steps. 1 is too high. 0.1 is sweet spot.
     random_state=42 # reproducibility. same result each time you run it.
-)
+    )
 
-model.fit(X_train, y_train) # train the model on the training data. Finds patterns between bp, age etc.
-print("Model training complete!")
+    model.fit(X_train, y_train) # train the model on the training data. Finds patterns between bp, age etc.
+    print("Model training complete!")
 
-## Evaluate Model ##
+    mlflow.xgboost.log_model(model, name="model") # this saves the actual trained model with '.log_model'.
 
-y_pred = model.predict(X_test) # Make predictions on test data
+    ## Evaluate Model ##
 
-accuracy = accuracy_score(y_test, y_pred) # compare predictions to actual answers
-print(f"Accuracy: {accuracy:.4f}") # print the accuracy
+    y_pred = model.predict(X_test) # Make predictions on test data
 
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))  # detailed breakdown of model performance for each class e.g precision, recall, f1-score, support.
+    accuracy = accuracy_score(y_test, y_pred) # compare predictions to actual answers
+    print(f"Accuracy: {accuracy:.4f}") # print the accuracy
+
+    mlflow.log_metric("accuracy", accuracy) # log_metric is for output
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))  # detailed breakdown of model performance for each class e.g precision, recall, f1-score, support.
 
 # Precision -> Of all patients, model predicted sick, how many actually were? High precision = few false alarms.
 # Recall -> of all actually sick patients, how many did the model catch?
@@ -89,9 +107,9 @@ print(classification_report(y_test, y_pred))  # detailed breakdown of model perf
 
 ## Save Model ##
 
-joblib.dump(model, 'heart_disease_model.pkl') # Save the trained XGBoost model to disk. Contains the 100 trees and all the patterns it learned.
-joblib.dump(scaler, 'scaler.pkl') # Save Scaler too, needed for predictions. It contains the mean and std it learnt from training data. MUST use same scaler for new predictions otherwise scaling will be wrong.
-print("Model and scaler saved!") # .pkl is pickle file type. It is python's way of saving ANY Python object to disk.    
+    joblib.dump(model, 'heart_disease_model.pkl') # Save the trained XGBoost model to disk. Contains the 100 trees and all the patterns it learned.
+    joblib.dump(scaler, 'scaler.pkl') # Save Scaler too, needed for predictions. It contains the mean and std it learnt from training data. MUST use same scaler for new predictions otherwise scaling will be wrong.
+    print("Model and scaler saved!") # .pkl is pickle file type. It is python's way of saving ANY Python object to disk.    
 
 print(df[df['target']==0].head())
 print(df['thal'].value_counts())

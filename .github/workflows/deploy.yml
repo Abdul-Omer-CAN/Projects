@@ -1,0 +1,42 @@
+name: Build and Push to ECR
+
+on:
+  push:
+    branches: [master]
+    paths: 
+      - '01-Heart-Disease-Predictor/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+
+    steps: 
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-2
+
+
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      - name: Build Docker image
+        working-directory: 01-Heart-Disease-Predictor
+        run: docker build -t heart_disease_api .
+
+      - name: Tag image for ECR
+        run: docker tag heart_disease_api:latest 456966189523.dkr.ecr.us-east-2.amazonaws.com/heart_disease_api:latest
+
+      - name: Push image to ECR
+        run: docker push  456966189523.dkr.ecr.us-east-2.amazonaws.com/heart_disease_api:latest
+
+
+
+  

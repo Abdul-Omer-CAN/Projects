@@ -1,0 +1,22 @@
+artifact_path: file:C:/Users/abdul/Desktop/FullProgram/Projects/04-Clinical-Intelligence-Platform/mlruns/1/models/m-b8fb1fb3cba4428aa1f07e1774ab0792/artifacts
+flavors:
+  python_function:
+    data: model.ubj
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.xgboost
+    python_version: 3.14.6
+  xgboost:
+    code: null
+    data: model.ubj
+    model_class: xgboost.sklearn.XGBClassifier
+    model_format: ubj
+    xgb_version: 3.4.0
+mlflow_version: 3.16.1
+model_id: m-b8fb1fb3cba4428aa1f07e1774ab0792
+model_size_bytes: 106710
+model_uuid: m-b8fb1fb3cba4428aa1f07e1774ab0792
+prompts: null
+run_id: 957d802deda24dd0b922ade170934de6
+utc_time_created: '2026-09-25 23:22:18.031961'

@@ -1,0 +1,24 @@
+artifact_path: file:C:/Users/abdul/Desktop/FullProgram/Projects/04-Clinical-Intelligence-Platform/mlruns/1/models/m-d6d238f41489498baec29f521813f9fc/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.6
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.0
+    skops_trusted_types:
+    - sklearn.tree._tree.Tree
+mlflow_version: 3.16.1
+model_id: m-d6d238f41489498baec29f521813f9fc
+model_size_bytes: 9187
+model_uuid: m-d6d238f41489498baec29f521813f9fc
+prompts: null
+run_id: 8810dd69f61a4673aaa7d6f47f6dc387
+utc_time_created: '2026-09-25 23:22:32.132141'

@@ -1,0 +1,6 @@
+frontend/
+__pycache__/
+*.pyc
+mlruns/
+.git/
+.env
